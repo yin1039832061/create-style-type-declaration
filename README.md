@@ -18,9 +18,9 @@
 - 安装
 
 ```bash
-   npm install create-style-type -D
+   npm install create-style-type-declaration -D
    or
-   yarn add create-style-type -D
+   yarn add create-style-type-declaration -D
 ```
 
 - 配置文件
@@ -39,7 +39,7 @@
 
 package.json 文件的scripts中增加一行配置，如下：
 ```json
-"cst":"node ./node_modules/create-style-type/index.js " 
+"cst":"node ./node_modules/create-style-type-declaration" 
 ```
 可以通过执行
 ```bash
