@@ -5,7 +5,7 @@ const colors = require('colors');
 const postcssScss = require('postcss-scss');
 const { readFile, getFileType, replaceAll, dashToCamelcase } = require('./src/utils')
 const fsPromise = require('fs').promises
-const configFile = 'kaStyle.config.json'
+const configFile = 'cst.config.json'
 let exclude;
 let camelCase;
 let whileMaxCount;
