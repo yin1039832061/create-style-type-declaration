@@ -1,6 +1,6 @@
 {
   "name": "create-style-type-declaration",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "auto create type declaration files for the scss and less files",
   "main": "index.js",
   "scripts": {

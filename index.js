@@ -102,11 +102,10 @@ function getSelector(content, fileType) {
     if (cssAst.type === 'root') {
         const nodes = cssAst.nodes;
         //递归样式文件ast
-        // let result = recursion(nodes)
         let result = recursionAst(nodes)
         const set = new Set()
         result.map(item => {
-            let arr = item.match(/\.([^\s\>\:]*)/g)
+            let arr = item.match(/\.([^\s\>\:\.]*)/g)
             if (arr) {
                 arr.map(i => set.add(i))
             }
