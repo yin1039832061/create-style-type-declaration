@@ -1,8 +1,9 @@
 {
   "name": "create-style-type-declaration",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "auto create type declaration files for the scss and less files",
   "main": "index.js",
+  "repository": "https://github.com/yin1039832061/create-style-type-declaration",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

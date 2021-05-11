@@ -48,3 +48,5 @@ package.json 文件的scripts中增加一行配置，如下：
     npm run cst
 ```
 生成类型声明文件
+## issue
+https://github.com/yin1039832061/create-style-type-declaration/issues
