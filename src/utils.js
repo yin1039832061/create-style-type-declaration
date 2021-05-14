@@ -32,19 +32,30 @@ const getFileType = (filePath) => {
         console.log(`[error]${colors.red(err)}`)
     })
 }
+const readdir = dirName => {
+    return new Promise((resolve, reject) => {
+        fs.readdir(dirName, (err, data) => {
+            if (err) reject(err)
+            else
+                resolve(data)
+        })
+    }).catch(err => {
+        console.log(`[error]${colors.red(err)}`)
+    })
+}
 const replaceAll = function (find, replace, str) {
     var find = find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
     return str.replace(new RegExp(find, 'g'), replace);
 }
-const dashToCamelcase=(str)=>{
-    let len=str.length;
-    let result="";
-    for(let i=0;i<len;i++){
-        if(str.charAt(i)==="-"){
-            result+=(str.charAt(i+1)).toUpperCase()
+const dashToCamelcase = (str) => {
+    let len = str.length;
+    let result = "";
+    for (let i = 0; i < len; i++) {
+        if (str.charAt(i) === "-") {
+            result += (str.charAt(i + 1)).toUpperCase()
             i++;
-        }else{
-            result+=str.charAt(i)
+        } else {
+            result += str.charAt(i)
         }
     }
     return result;
@@ -54,4 +65,5 @@ module.exports = {
     getFileType,
     replaceAll,
     dashToCamelcase,
+    readdir,
 }

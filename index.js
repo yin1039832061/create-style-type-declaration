@@ -3,8 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const colors = require('colors');
 const postcssScss = require('postcss-scss');
-const { readFile, getFileType, replaceAll, dashToCamelcase } = require('./src/utils')
-const fsPromise = require('fs').promises
+const { readFile, getFileType, replaceAll, dashToCamelcase, readdir } = require('./src/utils')
 const configFile = 'cst.config.json'
 let exclude;
 let camelCase;
@@ -19,7 +18,7 @@ let whileMaxCount;
     whileMaxCount = config.whileMaxCount || 50;
     exclude = exclude.map(item => path.resolve(rootPath, item))
     if (include.length > 0) {
-        include.map(item => {
+        include.forEach(item => {
             let includePath = path.resolve(rootPath, item);
             //遍历配置文件夹
             readDir(includePath)
@@ -39,10 +38,10 @@ async function getConfig(root) {
     return obj;
 }
 function readDir(dirName) {
-    fsPromise.readdir(dirName)
+    readdir(dirName)
         .then(res => {
             if (Array.isArray(res) && res.length > 0) {
-                res.map(async item => {
+                res.forEach(async item => {
                     let curPath = path.resolve(dirName, item);
                     if (exclude.includes(curPath)) {
                         return;
@@ -76,7 +75,7 @@ async function readStyleFile(filePath) {
     //提取样式文件中所有选择器
     const selectorArr = getSelector(fileContent, type);
     let writeContent = "";
-    selectorArr.map(item => {
+    selectorArr.forEach(item => {
         let selectorName = item.indexOf('.') === 0 ? item.substring(1) : item;
         if (camelCase) {
             selectorName = dashToCamelcase(selectorName)
@@ -104,10 +103,10 @@ function getSelector(content, fileType) {
         //递归样式文件ast
         let result = recursionAst(nodes)
         const set = new Set()
-        result.map(item => {
+        result.forEach(item => {
             let arr = item.match(/\.([^\s\>\:\.]*)/g)
             if (arr) {
-                arr.map(i => set.add(i))
+                arr.forEach(i => set.add(i))
             }
         })
         return [...set]
@@ -115,7 +114,7 @@ function getSelector(content, fileType) {
 }
 function recursionAst(nodes) {
     let result = [];
-    Array.isArray(nodes) && nodes.map(item => {
+    Array.isArray(nodes) && nodes.forEach(item => {
         //排除全局样式覆盖选择器
         if ((item.type === "rule" || item.type === "atrule") && item.selector !== ":global") {
             const variableArr = item.type !== 'atrule' && item.selector.match(/(\$[^\}]*)/g);
@@ -151,7 +150,7 @@ function recursionAst(nodes) {
                             })
                             runWhileStr = replaceAll('$', 'varKv.$', runWhileStr)
                             temp = [...new Set(temp)]
-                            temp.map(_item => {
+                            temp.forEach(_item => {
                                 varKv[_item] = getVal(item.parent.parent, _item)
                             })
                             let count = 0;//while循环计数器，防止死循环
@@ -183,7 +182,7 @@ function recursionAst(nodes) {
                                 eachValArrStr = eachValArrStr.replace(/[\s|\n]/g, "")
                                 const eachValArr = eachValArrStr.match(/\(([^\)]*)\)/g)
                                 let tempArr = eachValArr[eachVarInd].replace(/[\(|\)]/g, '').split(',');
-                                tempArr.map(_ => {
+                                tempArr.forEach(_ => {
                                     const clsName = item.selector.replace(`#{${variableArr[0]}}`, _.trim())
                                     result.push(clsName)
                                 })
